@@ -33,6 +33,7 @@ module Kindler
       @pages = []
       @local_images = []
       @pages_by_section = {}
+      @file_name = options[:file_name]
       raise KindlerError.new("must provide the book title ") unless title
     end
 
@@ -87,7 +88,8 @@ module Kindler
     end
 
     def book_path
-      "#{tmp_dir}/#{valid_title}.mobi"
+      file_name = @file_name || valid_title
+      "#{tmp_dir}/#{file_name}.mobi"
     end
 
     private
@@ -306,7 +308,7 @@ module Kindler
             page[:content] = article.inner_html
             # add to manifest
             local_images << "#{image_local_address}"
-            images_count += 1 
+            images_count += 1
           rescue Exception => e
             debug "got error when fetch and save image: #{e}"
           end
