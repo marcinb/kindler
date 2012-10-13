@@ -33,6 +33,7 @@ module Kindler
       @pages = []
       @local_images = []
       @pages_by_section = {}
+      @file_name = options[:file_name]
       raise KindlerError.new("must provide the book title ") unless title
     end
 
@@ -87,7 +88,7 @@ module Kindler
     end
 
     def book_path
-      "#{tmp_dir}/#{valid_title}.mobi"
+      "#{tmp_dir}/#{@file_name}.mobi"
     end
 
     private
@@ -95,7 +96,7 @@ module Kindler
     # you can use "sudo brew install " to install it
     def kindlegen
       debug 'begin generate mobi'
-      system("kindlegen #{tmp_dir}/#{valid_title}.opf ")
+      system("kindlegen #{tmp_dir}/#{@file_name}.opf ")
     end
 
     # generate contents.html
@@ -306,7 +307,7 @@ module Kindler
             page[:content] = article.inner_html
             # add to manifest
             local_images << "#{image_local_address}"
-            images_count += 1 
+            images_count += 1
           rescue Exception => e
             debug "got error when fetch and save image: #{e}"
           end
@@ -348,7 +349,7 @@ module Kindler
     def write_to_disk
       File.open("#{tmp_dir}/nav-contents.ncx",'wb') { |f| f.write @ncx }
       File.open(file_path('contents.html'),'wb') {|f| f.write @toc }
-      File.open("#{tmp_dir}/#{valid_title}.opf",'wb') {|f| f.write @opf}
+      File.open("#{tmp_dir}/#{@file_name}.opf",'wb') {|f| f.write @opf}
       # make html files
       files_count = 1
       pages.each do |page|
