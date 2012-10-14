@@ -231,8 +231,8 @@ module Kindler
               <dc:title>#{title}</dc:title>
               <dc:language>en-gb</dc:language>
               <meta content="cover-image" name="cover"/>
-              <dc:creator>Kindler- 29decibel</dc:creator>
-              <dc:publisher>Kindler- 29decibel</dc:publisher>
+              <dc:creator>#{author}</dc:creator>
+              <dc:publisher>ReadifyApp.com</dc:publisher>
               <dc:subject>News</dc:subject>
               <dc:identifier id="#{title}">#{title}</dc:identifier>
               <dc:date>#{Time.now.to_date}</dc:date>
